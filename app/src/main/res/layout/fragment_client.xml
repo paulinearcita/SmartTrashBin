@@ -65,7 +65,7 @@
         android:id="@+id/edittext_pubtopic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:autofillHints="@string/topic_text"
         android:ems="15"
         android:hint="@string/topic_text"
@@ -98,5 +98,44 @@
         app:layout_constraintHorizontal_bias="0.769"
         app:layout_constraintStart_toEndOf="@+id/btnLock"
         app:layout_constraintTop_toBottomOf="@+id/txtLock" />
+
+
+    <Switch
+        android:id="@+id/notifSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Notifications"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_disconnect" />
+
+    <Spinner
+        android:id="@+id/trashDaySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notifSwitch" />
+
+    <Button
+        android:id="@+id/testButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="104dp"
+        android:layout_marginRight="104dp"
+        android:text="Test"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.769"
+        app:layout_constraintStart_toEndOf="@+id/btnLock"
+        app:layout_constraintTop_toBottomOf="@+id/trashDaySpinner"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

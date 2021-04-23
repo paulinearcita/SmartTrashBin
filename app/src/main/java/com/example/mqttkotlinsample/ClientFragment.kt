@@ -1,20 +1,31 @@
 package com.example.mqttkotlinsample
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.fragment_client.*
 import org.eclipse.paho.client.mqttv3.*
+import java.util.*
 
 class ClientFragment : Fragment() {
     private lateinit var mqttClient : MQTTClient
+
+    var dayOfWeek = 1
+    var notifsEnabled = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,14 +52,22 @@ class ClientFragment : Fragment() {
                 }
             }
         })
+
+
+
     }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+
+
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_client, container, false)
+
     }
 
     // NEED
@@ -60,6 +79,58 @@ class ClientFragment : Fragment() {
         val clientId    = arguments?.getString(MQTT_CLIENT_ID_KEY)
         val username    = arguments?.getString(MQTT_USERNAME_KEY)
         val pwd         = arguments?.getString(MQTT_PWD_KEY)
+
+        val spinner: Spinner = trashDaySpinner
+
+
+        ArrayAdapter.createFromResource(
+                this.requireActivity(),
+                R.array.days_of_week,
+                android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_expandable_list_item_1)
+            trashDaySpinner.adapter = adapter
+        }
+
+
+
+        trashDaySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+
+                if(trashDaySpinner.selectedItem.toString() == "Monday")
+                    dayOfWeek = 1
+                else if(trashDaySpinner.selectedItem.toString() == "Tuesday")
+                    dayOfWeek = 2
+                else if(trashDaySpinner.selectedItem.toString() == "Wednesday")
+                    dayOfWeek = 3
+                else if(trashDaySpinner.selectedItem.toString() == "Thursday")
+                    dayOfWeek = 4
+                else if(trashDaySpinner.selectedItem.toString() == "Friday")
+                    dayOfWeek = 5
+                else if(trashDaySpinner.selectedItem.toString() == "Saturday")
+                    dayOfWeek = 6
+                else if(trashDaySpinner.selectedItem.toString() == "Sunday")
+                    dayOfWeek = 7
+
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<out Adapter>?) {
+                dayOfWeek = 1
+            }
+
+        }
+
+        notifSwitch.isChecked = notifsEnabled
+
+        notifSwitch.setOnClickListener {
+
+            notifsEnabled = notifSwitch.isChecked
+
+        }
+
+
 
         // Check if passed arguments are valid
         if (    serverURI   != null    &&
@@ -171,6 +242,41 @@ class ClientFragment : Fragment() {
             }
         }
 
+        testButton.setOnClickListener {
+            var s = "Monday"
+            when (dayOfWeek) {
+                1 -> s = "Monday"
+                2 -> s = "Tuesday"
+                3 -> s = "Wednesday"
+                4 -> s = "Thursday"
+                5 -> s = "Friday"
+                6 -> s = "Saturday"
+                7 -> s = "Sunday"
+            }
+
+
+            val channel_id = "id1"
+            createChannel("id1", "Channel1")
+            val trashDayNofifID = 1
+            val d = Date()
+            @Suppress("DEPRECATION") val day = d.day
+            if(day == dayOfWeek && notifsEnabled) //replace with saved setting
+            {
+                var builder = NotificationCompat.Builder(this.requireActivity(), channel_id)
+                        .setSmallIcon(R.drawable.knight)
+                        .setContentTitle("It is $s. Trash Day!")
+                        .setContentText(Context.NOTIFICATION_SERVICE)
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+                with(NotificationManagerCompat.from(this.requireActivity())) {
+                    // notificationId is a unique int for each notification that you must define
+                    notify(trashDayNofifID, builder.build())
+                }
+
+            }
+
+        }
+
         view.findViewById<Button>(R.id.btnUnlock).setOnClickListener {
             val topic   = view.findViewById<EditText>(R.id.edittext_pubtopic).text.toString()
             val message = "b"
@@ -271,4 +377,23 @@ class ClientFragment : Fragment() {
 //            }
 //        }
     }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        // TODO: Step 1.6 START create a channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = channelName
+            val descriptionText = "Channel Description"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val mChannel = NotificationChannel(channelId, name, importance)
+            mChannel.description = descriptionText
+
+            val notificationManager = requireActivity().getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+
+
+        }
+        // TODO: Step 1.6 END create a channel
+    }
+
+
 }
