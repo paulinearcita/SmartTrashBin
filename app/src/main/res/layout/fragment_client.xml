@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConnectFragment">
+
+    <TextView
+        android:id="@+id/txtLock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:text="Child and Pet Lock Mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_clean_client"
+        android:layout_width="305dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginRight="61dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/button_clean_text"
+        app:layout_constraintBottom_toTopOf="@+id/button_prefill_client"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_prefill_client"
+        android:layout_width="305dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginRight="61dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/button_prefill_text"
+        app:layout_constraintBottom_toTopOf="@+id/button_disconnect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_disconnect"
+        android:layout_width="305dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginRight="61dp"
+        android:layout_marginBottom="188dp"
+        android:text="@string/button_disconnect_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edittext_pubtopic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:autofillHints="@string/topic_text"
+        android:ems="15"
+        android:hint="@string/topic_text"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLock" />
+
+    <Button
+        android:id="@+id/btnLock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="28dp"
+        android:text="Lock"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLock" />
+
+    <Button
+        android:id="@+id/btnUnlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="104dp"
+        android:layout_marginRight="104dp"
+        android:text="Unlock"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.769"
+        app:layout_constraintStart_toEndOf="@+id/btnLock"
+        app:layout_constraintTop_toBottomOf="@+id/txtLock" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
